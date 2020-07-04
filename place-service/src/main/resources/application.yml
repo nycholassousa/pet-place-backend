@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: place-service
+  main:
+    banner-mode: off
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  datasource:
+    url: jdbc:h2:mem:${spring.application.name}
+    driver-class-name: org.h2.Driver
+    data-username: sa
+    data-password:
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.client.eureka-server-port}/eureka/
+    eureka-server-port: 8761
+
+server:
+  port: 8081
