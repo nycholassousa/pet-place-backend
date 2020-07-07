@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/place")
@@ -31,8 +32,22 @@ public class PlaceController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     @ResponseBody
-    public ResponseEntity<Place> getPlaceById(@PathVariable Integer id) {
-        Place place = placeService.getPlaceById(id);
+    public ResponseEntity<Place> getPlaceById(@PathVariable("id") Integer placeId) {
+        Place place = placeService.getPlaceById(placeId);
         return new ResponseEntity<>(place, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/user/{id}")
+    @ResponseBody
+    public ResponseEntity<List<Place>> getPlacesByUserId(@PathVariable("id") Integer userId) {
+        List<Place> placeList = placeService.getAllPlacesByUserId(userId);
+        return new ResponseEntity<>(placeList, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/latitude/{lat}/longitude/{lng}/distance/{distance}")
+    @ResponseBody
+    public ResponseEntity<List<Place>> getPlacesByPositionAndDistance(@PathVariable long lat, @PathVariable long lng, @PathVariable double distance) {
+        List<Place> placeList = placeService.getAllPlacesByCoordinateAndDistance(lat, lng, distance);
+        return new ResponseEntity<>(placeList, HttpStatus.OK);
     }
 }

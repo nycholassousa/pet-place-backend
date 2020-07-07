@@ -40,6 +40,24 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PlaceAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> handlePlaceAlreadyExistException(PlaceAlreadyExistException ex, WebRequest request) {
+
+        log.error(ex.getMessage());
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message("A location with this latitude and longitude already exists.")
+                .path(((ServletWebRequest)request).getRequest().getRequestURI())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> details = new ArrayList<>();
