@@ -26,6 +26,13 @@ public class PlaceController {
     @ResponseBody
     public ResponseEntity<Place> createPlace(@Valid @RequestBody CreatePlaceRequest createPlaceRequest) {
         Place place = placeService.createPlace(createPlaceRequest);
+        return new ResponseEntity<>(place, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    @ResponseBody
+    public ResponseEntity<Place> getPlaceById(@PathVariable Integer id) {
+        Place place = placeService.getPlaceById(id);
         return new ResponseEntity<>(place, HttpStatus.OK);
     }
 }

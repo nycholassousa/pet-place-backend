@@ -1,5 +1,6 @@
 package com.petplace.placeservice.service.impl;
 
+import com.petplace.placeservice.exception.PlaceNotFoundException;
 import com.petplace.placeservice.model.Place;
 import com.petplace.placeservice.payload.CreatePlaceRequest;
 import com.petplace.placeservice.repository.PlaceRepository;
@@ -29,7 +30,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Place getPlaceById(Integer id) {
-        return placeRepository.findById(id).orElseThrow(() -> new RuntimeException("This place dont exists"));
+        return placeRepository.findById(id).orElseThrow(() -> new PlaceNotFoundException("Place with id " + id + " not found."));
     }
 
     @Override
