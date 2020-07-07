@@ -1,6 +1,8 @@
 package com.petplace.placeservice.payload;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,6 +22,6 @@ public class CreatePlaceRequest {
     @NotNull
     private long longitude;
 
-    @NotEmpty
+    @NotNull
     private boolean internalArea;
 }
