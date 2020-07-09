@@ -4,16 +4,19 @@ import com.petplace.placeservice.model.Place;
 import com.petplace.placeservice.payload.CreatePlaceRequest;
 import com.petplace.placeservice.service.PlaceService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/place")
 @AllArgsConstructor
+@Slf4j
 public class PlaceController {
 
     private final PlaceService placeService;
@@ -32,7 +35,7 @@ public class PlaceController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     @ResponseBody
-    public ResponseEntity<Place> getPlaceById(@PathVariable("id") Integer placeId) {
+    public ResponseEntity<Place> getPlaceById(@PathVariable("id") Integer placeId, HttpServletRequest request) {
         Place place = placeService.getPlaceById(placeId);
         return new ResponseEntity<>(place, HttpStatus.OK);
     }
@@ -46,8 +49,8 @@ public class PlaceController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/latitude/{lat}/longitude/{lng}/distance/{distance}")
     @ResponseBody
-    public ResponseEntity<List<Place>> getPlacesByPositionAndDistance(@PathVariable long lat, @PathVariable long lng, @PathVariable double distance) {
-        List<Place> placeList = placeService.getAllPlacesByCoordinateAndDistance(lat, lng, distance);
+    public ResponseEntity<List<Place>> getPlacesByPositionAndDistance(@PathVariable("lat") long latitude, @PathVariable("lng") long longitude, @PathVariable double distance) {
+        List<Place> placeList = placeService.getAllPlacesByCoordinateAndDistance(latitude, longitude, distance);
         return new ResponseEntity<>(placeList, HttpStatus.OK);
     }
 }

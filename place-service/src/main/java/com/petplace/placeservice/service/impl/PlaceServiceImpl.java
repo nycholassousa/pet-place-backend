@@ -1,5 +1,6 @@
 package com.petplace.placeservice.service.impl;
 
+import com.petplace.placeservice.exception.PlaceAlreadyExistException;
 import com.petplace.placeservice.exception.PlaceNotFoundException;
 import com.petplace.placeservice.model.Place;
 import com.petplace.placeservice.payload.CreatePlaceRequest;
@@ -45,7 +46,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     private void checkPlaceExistsByLatitudeAndLongitude(Place place) {
         if (placeRepository.existsByLatitudeAndLongitude(place.getLatitude(), place.getLongitude())) {
-            throw new RuntimeException("This place already exists");
+            throw new PlaceAlreadyExistException("This place already exists");
         }
     }
 }

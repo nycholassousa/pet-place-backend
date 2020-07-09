@@ -1,11 +1,13 @@
 package com.petplace.placeservice.payload;
 
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
+@Builder
 public class CreatePlaceRequest {
 
     @NotNull(message = "{place.user.null}")
@@ -15,11 +17,11 @@ public class CreatePlaceRequest {
     private String name;
 
     @NotNull(message = "{place.latitude.null}")
-    private long latitude;
+    private Double latitude;
 
     @NotNull(message = "{place.longitude.null}")
-    private long longitude;
+    private Double longitude;
 
     @NotNull(message = "{place.internalArea.empty}")
-    private boolean internalArea;
+    private Boolean internalArea;
 }
